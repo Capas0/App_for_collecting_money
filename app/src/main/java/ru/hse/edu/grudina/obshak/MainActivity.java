@@ -1,4 +1,4 @@
-package com.example.cloudtask;
+package ru.hse.edu.grudina.obshak;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

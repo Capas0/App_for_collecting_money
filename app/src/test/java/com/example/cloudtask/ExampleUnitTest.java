@@ -1,4 +1,4 @@
-package com.example.obshak;
+package com.example.cloudtask;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.obshak;
+package com.example.cloudtask;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.obshak", appContext.getPackageName());
+        assertEquals("com.example.cloudtask", appContext.getPackageName());
     }
 }

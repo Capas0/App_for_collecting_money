@@ -1,4 +1,4 @@
-package com.example.obshak;
+package ru.hse.edu.grudina.obshak;
 
 import org.junit.Test;
 

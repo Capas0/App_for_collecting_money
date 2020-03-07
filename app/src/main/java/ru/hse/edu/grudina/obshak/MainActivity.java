@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText Email;
     private EditText Password;
+    private EditText NickName;
     private TextView Question;
     private TextView LogIn;
     private Button Login;
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Email = findViewById(R.id.logIn);
         Password = findViewById(R.id.password);
         Login = findViewById(R.id.logInBT);
+        NickName = findViewById(R.id.nickName);
         Question = findViewById(R.id.questionTV);
         LogIn = findViewById(R.id.returnTV);
         Register = findViewById(R.id.registerBT);
@@ -72,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.password_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                signIn(Email.getText().toString(), Password.getText().toString());
+                signIn(Email.getText().toString(), Password.getText().toString(), "");
             }
         });
         Register.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +89,10 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.password_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(!isNickNameValid(NickName.getText().toString())){
+                    Toast.makeText(MainActivity.this, R.string.nick_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 registrationUser(Email.getText().toString(), Password.getText().toString());
             }
         });
@@ -96,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
                 LogIn.setVisibility(View.VISIBLE);
                 Login.setVisibility(View.INVISIBLE);
                 Register.setVisibility(View.VISIBLE);
+                NickName.setVisibility(View.VISIBLE);
+                Password.setText("");
+                NickName.setText("");
             }
         });
         LogIn.setOnClickListener(new View.OnClickListener() {
@@ -105,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 LogIn.setVisibility(View.INVISIBLE);
                 Login.setVisibility(View.VISIBLE);
                 Register.setVisibility(View.INVISIBLE);
+                NickName.setVisibility(View.GONE);
                 Password.setText("");
             }
         });
@@ -159,13 +170,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void signIn(String email, String password) {
+    public void signIn(String email, String password, final String start) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(start).append(" ").append(getString(R.string.login_success)).append(", ").append(mAuth.getCurrentUser().getDisplayName()).append('!');
+                    Toast.makeText(MainActivity.this, builder, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
-                    Toast.makeText(MainActivity.this, R.string.login_success, Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                 } else {
                     Toast.makeText(MainActivity.this, R.string.login_error, Toast.LENGTH_SHORT).show();
@@ -174,14 +187,16 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void registrationUser(String email, String password){
+    public void registrationUser(final String email, final String password){
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(@NonNull final Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
-                    Toast.makeText(MainActivity.this, R.string.registration_success, Toast.LENGTH_SHORT).show();
-                    startActivity(intent);
+                    UserProfileChangeRequest profileChange = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(NickName.getText().toString())
+                            .build();
+                    mAuth.getCurrentUser().updateProfile(profileChange);
+                    signIn(email, password, getString(R.string.registration_success));
                 } else {
                     Toast.makeText(MainActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
                 }
@@ -200,5 +215,9 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isPasswordValid(String password) {
         return password != null && password.length() > 5;
+    }
+
+    private boolean isNickNameValid(String nickName) {
+        return nickName != null && nickName.length() > 2;
     }
 }

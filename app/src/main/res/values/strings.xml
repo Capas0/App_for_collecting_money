@@ -1,16 +1,18 @@
 <resources>
     <string name="app_name">Общак</string>
     <string name="password">Пароль</string>
-    <string name="login">Логин</string>
+    <string name="mail">Почта</string>
+    <string name="nick">Никнейм</string>
     <string name="log_in">Войти</string>
     <string name="register">Зарегистрироваться</string>
     <string name="accaunt_question">У Вас нет аккаунта? Зарегистрироваться!</string>
+    <string name="nick_error">Никнейм должен быть длиннее двух символов</string>
     <string name="password_error">Пароль должен быть длиннее пяти символов</string>
     <string name="email_error">Некорректная почта</string>
     <string name="registration_error">Ошибка регистрации</string>
-    <string name="registration_success">Регистрация прошла успешно, добро пожаловать!</string>
+    <string name="registration_success">Регистрация прошла успешно!</string>
     <string name="login_error">Неверные логин или пароль</string>
-    <string name="login_success">Добро пожаловать!</string>
+    <string name="login_success">Добро пожаловать</string>
     <string name="about_program">О программе</string>
     <string name="about_program_info">В разработке принимали участие:\nВологжанин Евгений\nНикольский Владислав\nШарипов Айнур\nЖучков Святослав\nЯдав Навин</string>
     <string name="close">Закрыть приложение</string>

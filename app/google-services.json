@@ -52,6 +52,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "503140493464-alcdferasr4a6neo250hit1ravpemu1v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.hse.edu.grudina.obshak",
+            "certificate_hash": "7ab3f6e36c109226180a748df0f811d51954f1c4"
+          }
+        },
+        {
           "client_id": "503140493464-u2h4g7nbqqumko5aqru55dleg17l0271.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

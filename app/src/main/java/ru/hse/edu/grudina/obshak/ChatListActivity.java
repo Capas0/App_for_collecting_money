@@ -1,8 +1,9 @@
 package ru.hse.edu.grudina.obshak;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ChatListActivity extends AppCompatActivity {
 
@@ -10,5 +11,7 @@ public class ChatListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_list);
+
+        startActivity(new Intent(ChatListActivity.this, ChatActivity.class));
     }
 }

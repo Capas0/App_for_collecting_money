@@ -35,8 +35,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText NickName;
     private TextView Question;
     private TextView LogIn;
+    private TextView ResetPassword;
     private Button Login;
     private Button Register;
+    private Button Reset;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,9 +63,11 @@ public class MainActivity extends AppCompatActivity {
         Password = findViewById(R.id.password);
         Login = findViewById(R.id.logInBT);
         NickName = findViewById(R.id.nickName);
+        ResetPassword = findViewById(R.id.resetPasswordTV);
         Question = findViewById(R.id.questionTV);
         LogIn = findViewById(R.id.returnTV);
         Register = findViewById(R.id.registerBT);
+        Reset = findViewById(R.id.resetPasswordBT);
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,27 +101,32 @@ public class MainActivity extends AppCompatActivity {
                 registrationUser(Email.getText().toString(), Password.getText().toString());
             }
         });
+        Reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isUserNameValid(Email.getText().toString())){
+                    Toast.makeText(MainActivity.this, R.string.email_error, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                resetPassword(Email.getText().toString());
+            }
+        });
         Question.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Question.setVisibility(View.INVISIBLE);
-                LogIn.setVisibility(View.VISIBLE);
-                Login.setVisibility(View.INVISIBLE);
-                Register.setVisibility(View.VISIBLE);
-                NickName.setVisibility(View.VISIBLE);
-                Password.setText("");
-                NickName.setText("");
+                setRegisterView();
             }
         });
         LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Question.setVisibility(View.VISIBLE);
-                LogIn.setVisibility(View.INVISIBLE);
-                Login.setVisibility(View.VISIBLE);
-                Register.setVisibility(View.INVISIBLE);
-                NickName.setVisibility(View.GONE);
-                Password.setText("");
+                setLoginView();
+            }
+        });
+        ResetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResetPasswordView();
             }
         });
     }
@@ -177,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     StringBuilder builder = new StringBuilder();
                     builder.append(start).append(" ").append(getString(R.string.login_success)).append(", ").append(mAuth.getCurrentUser().getDisplayName()).append('!');
-                    Toast.makeText(MainActivity.this, builder, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, builder, Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
                     startActivity(intent);
                 } else {
@@ -204,6 +214,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void resetPassword(String email){
+        mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, R.string.reset_success, Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(MainActivity.this, R.string.reset_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
@@ -219,5 +242,44 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isNickNameValid(String nickName) {
         return nickName != null && nickName.length() > 2;
+    }
+
+    private void setLoginView(){
+        Email.setVisibility(View.VISIBLE);
+        Password.setVisibility(View.VISIBLE);
+        NickName.setVisibility(View.GONE);
+        Question.setVisibility(View.VISIBLE);
+        LogIn.setVisibility(View.INVISIBLE);
+        ResetPassword.setVisibility(View.VISIBLE);
+        Login.setVisibility(View.VISIBLE);
+        Register.setVisibility(View.INVISIBLE);
+        Reset.setVisibility(View.INVISIBLE);
+        Password.setText("");
+    }
+
+    private void setRegisterView(){
+        Email.setVisibility(View.VISIBLE);
+        Password.setVisibility(View.VISIBLE);
+        NickName.setVisibility(View.VISIBLE);
+        Question.setVisibility(View.INVISIBLE);
+        LogIn.setVisibility(View.VISIBLE);
+        ResetPassword.setVisibility(View.INVISIBLE);
+        Login.setVisibility(View.INVISIBLE);
+        Register.setVisibility(View.VISIBLE);
+        Reset.setVisibility(View.INVISIBLE);
+        Password.setText("");
+        NickName.setText("");
+    }
+
+    private void setResetPasswordView(){
+        Email.setVisibility(View.VISIBLE);
+        Password.setVisibility(View.GONE);
+        NickName.setVisibility(View.GONE);
+        Question.setVisibility(View.INVISIBLE);
+        LogIn.setVisibility(View.VISIBLE);
+        ResetPassword.setVisibility(View.INVISIBLE);
+        Login.setVisibility(View.INVISIBLE);
+        Register.setVisibility(View.INVISIBLE);
+        Reset.setVisibility(View.VISIBLE);
     }
 }

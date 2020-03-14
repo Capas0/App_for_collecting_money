@@ -9,10 +9,13 @@
     <string name="nick_error">Никнейм должен быть длиннее двух символов</string>
     <string name="password_error">Пароль должен быть длиннее пяти символов</string>
     <string name="email_error">Некорректная почта</string>
+    <string name="email_error_2">Аккаунт с данной почтой не существует</string>
     <string name="registration_error">Ошибка регистрации</string>
     <string name="registration_success">Регистрация прошла успешно!</string>
     <string name="login_error">Неверные логин или пароль</string>
     <string name="login_success">Добро пожаловать</string>
+    <string name="reset_success">Форма для смены пароля отправленна на почту</string>
+    <string name="reset_error">Ошибка! Попробуйте позже</string>
     <string name="about_program">О программе</string>
     <string name="about_program_info">В разработке принимали участие:\nВологжанин Евгений\nНикольский Владислав\nШарипов Айнур\nЖучков Святослав\nЯдав Навин</string>
     <string name="close">Закрыть приложение</string>
@@ -20,5 +23,7 @@
     <string name="yes">да</string>
     <string name="no">нет</string>
     <string name="ok">ОК</string>
+    <string name="reset_password">Забыл пароль... </string>
+    <string name="reset_button">Отправить запрос!</string>
 
 </resources>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -129,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 setResetPasswordView();
             }
         });
+
+        SharedPreferences save = getSharedPreferences("SAVE", 0);
+        Email.setText(save.getString("email", ""));
     }
 
     @Override
@@ -185,6 +189,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    SharedPreferences save = getSharedPreferences("SAVE",0);
+                    SharedPreferences.Editor editor = save.edit();
+                    editor.putString("email", Email.getText().toString());
+                    editor.commit();
+
                     StringBuilder builder = new StringBuilder();
                     builder.append(start).append(" ").append(getString(R.string.login_success)).append(", ").append(mAuth.getCurrentUser().getDisplayName()).append('!');
                     Toast.makeText(MainActivity.this, builder, Toast.LENGTH_LONG).show();

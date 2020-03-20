@@ -19,11 +19,12 @@
     <string name="about_program">О программе</string>
     <string name="about_program_info">В разработке принимали участие:\nВологжанин Евгений\nНикольский Владислав\nШарипов Айнур\nЖучков Святослав\nЯдав Навин</string>
     <string name="close">Закрыть приложение</string>
+    <string name="close2">Закрыть и выйти из аккаунта</string>
     <string name="close_question">Вы дейсвительно хотите выйти?</string>
     <string name="yes">да</string>
     <string name="no">нет</string>
     <string name="ok">ОК</string>
     <string name="reset_password">Забыл пароль... </string>
     <string name="reset_button">Отправить запрос!</string>
-
+    <string name="quick_enter">Хотите ли вы войти как </string>
 </resources>

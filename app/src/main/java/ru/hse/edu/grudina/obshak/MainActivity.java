@@ -1,9 +1,13 @@
 package ru.hse.edu.grudina.obshak;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -133,6 +137,34 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences save = getSharedPreferences("SAVE", 0);
         Email.setText(save.getString("email", ""));
+
+
+        if(mAuth.getCurrentUser() != null){
+            AlertDialog.Builder dialog = new
+                    AlertDialog.Builder(MainActivity.this);
+            dialog.setMessage(getString(R.string.quick_enter) + " " + mAuth.getCurrentUser().getDisplayName() + "?");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton(R.string.yes, new
+                    DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            StringBuilder builder = new StringBuilder();
+                            builder.append(" ").append(getString(R.string.login_success)).append(", ").append(mAuth.getCurrentUser().getDisplayName()).append('!');
+                            Toast.makeText(MainActivity.this, builder, Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(MainActivity.this, ChatListActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+            dialog.setNegativeButton(R.string.no, new
+                    DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
+        }
     }
 
     @Override
@@ -161,6 +193,28 @@ public class MainActivity extends AppCompatActivity {
                     DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            MainActivity.this.finish();
+                        }
+                    });
+            dialog.setNegativeButton(R.string.no, new
+                    DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
+        }else if(id == R.id.closeAndExit){
+            AlertDialog.Builder dialog = new
+                    AlertDialog.Builder(MainActivity.this);
+            dialog.setMessage(R.string.close_question);
+            dialog.setCancelable(false);
+            dialog.setPositiveButton(R.string.yes, new
+                    DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAuth.signOut();
                             MainActivity.this.finish();
                         }
                     });

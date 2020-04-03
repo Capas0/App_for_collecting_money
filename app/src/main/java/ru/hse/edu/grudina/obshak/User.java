@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import java.util.Date;
 
-public class Person {
+public class User {
     private String id;
     private String nickName;
     private String name;
@@ -14,7 +14,7 @@ public class Person {
     private Uri photo;
     private Date birthday;
 
-    public Person(String id) {
+    public User(String id) {
         this.id = id;
     }
 

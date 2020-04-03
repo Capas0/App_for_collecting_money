@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -21,6 +22,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private Button Login;
     private Button Register;
     private Button Reset;
+    private ImageView Image;
+    private LinearLayout Layout;
 
 
     @Override
@@ -73,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         LogIn = findViewById(R.id.returnTV);
         Register = findViewById(R.id.registerBT);
         Reset = findViewById(R.id.resetPasswordBT);
+        Image = findViewById(R.id.imageView);
+        Layout = findViewById(R.id.linearLayout);
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setResetPasswordView();
+            }
+        });
+        Image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -308,6 +322,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setLoginView(){
+        Layout.setBackground(getDrawable(R.drawable.green_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.VISIBLE);
         NickName.setVisibility(View.GONE);
@@ -321,6 +336,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRegisterView(){
+        Layout.setBackground(getDrawable(R.drawable.red_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.VISIBLE);
         NickName.setVisibility(View.VISIBLE);
@@ -335,6 +351,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setResetPasswordView(){
+        Layout.setBackground(getDrawable(R.drawable.red_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.GONE);
         NickName.setVisibility(View.GONE);

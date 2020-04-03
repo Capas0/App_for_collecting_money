@@ -1,0 +1,631 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileActivity">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="20dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="60dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:foreground="@drawable/circle_red_frame"
+                app:srcCompat="@drawable/com_facebook_profile_picture_blank_square" />
+        </androidx.cardview.widget.CardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2"
+                android:background="@drawable/red_frame_two">
+                <TextView
+                    android:id="@+id/userNickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16sp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="Никнейм"
+                    android:theme="@style/BigTitle" />
+
+                <TextView
+                    android:id="@+id/userMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16sp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="MyMail@mail.ru"
+                    android:theme="@style/BigTitleTwo" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/userProfileRedact"
+                android:theme="@style/LittleTitleTwo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/green_frame_two"
+                android:text="@string/user_profile_reduct_text" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/userGeneral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/red_frame"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userGeneralText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16sp"
+                    android:text="@string/user_general_text"
+                    android:theme="@style/Title" />
+
+                <LinearLayout
+                    android:id="@+id/userFullNameRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_fullname_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Фамилия Имя Отчество"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userBirthdayRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_birthday_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userBirthday"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="1 января 1990"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userCityRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_city_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Вашингтон"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userLanguageRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_language_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userLanguage"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Русский"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userWorkRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_work_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userWorkName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="ВШЭ"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userContacts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/red_frame"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userContactsText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16sp"
+                    android:text="@string/user_contacts_text"
+                    android:theme="@style/Title" />
+
+                <LinearLayout
+                    android:id="@+id/userEmailRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_email_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="MyMail@mail.ru"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userPhoneNumberRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_phonenumber_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="8-800-555-35-35"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userAdressRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_adress_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userAdress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Вашингтон, дом 123, квартира 45"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userSocial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/red_frame"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userSocialText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16sp"
+                    android:text="@string/user_social_text"
+                    android:theme="@style/Title" />
+
+                <LinearLayout
+                    android:id="@+id/userVKRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_vk_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userVK"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Ссылка на вк"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userInstagramRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_instagram_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userInstagram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Ссылка на инстограмм"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userFacebookRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_facebook_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userFacebook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Ссылка на фейсбук"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/userAboutMyself"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/red_frame"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userAboutMyselfText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16sp"
+                    android:text="@string/user_aboutmyself_text"
+                    android:theme="@style/Title" />
+
+                <LinearLayout
+                    android:id="@+id/userHobbyRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_hobby_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userHobby"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Шахматы\nБильярд"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userQuoteRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_quoto_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userQuote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Безвкусица страшнее фашизма!"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userFilmRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_film_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userFilm"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Начало"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userBookRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_book_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userBook"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Мастер и маргарита"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userGroupRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_group_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userGrope"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Rummstein"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userPoliticRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_politic_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userPolitic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="Либеральные"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

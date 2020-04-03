@@ -27,4 +27,26 @@
     <string name="reset_password">Забыл пароль... </string>
     <string name="reset_button">Отправить запрос!</string>
     <string name="quick_enter">Хотите ли вы войти как </string>
+    <string name="user_general_text">Общее</string>
+    <string name="user_contacts_text">Контакты </string>
+    <string name="user_fullname_text">Полное имя</string>
+    <string name="user_birthday_text">День рождения</string>
+    <string name="user_city_text">Родной город</string>
+    <string name="user_email_text">Почта</string>
+    <string name="user_phonenumber_text">Номер телефона</string>
+    <string name="user_hobby_text">Хобби</string>
+    <string name="user_aboutmyself_text">О себе</string>
+    <string name="user_adress_text">Адрес</string>
+    <string name="user_language_text">Язык</string>
+    <string name="user_quoto_text">Любимая цитата</string>
+    <string name="user_film_text">Любимый фильм</string>
+    <string name="user_book_text">Любимая книга</string>
+    <string name="user_group_text">Любимая группа</string>
+    <string name="user_politic_text">Политические предпочтения</string>
+    <string name="user_work_text">Место работы/учебы</string>
+    <string name="user_social_text">Соцсети</string>
+    <string name="user_vk_text">Вконтакте</string>
+    <string name="user_instagram_text">Инстограмм</string>
+    <string name="user_facebook_text">Фейсбук</string>
+    <string name="user_profile_reduct_text">Редактировать</string>
 </resources>

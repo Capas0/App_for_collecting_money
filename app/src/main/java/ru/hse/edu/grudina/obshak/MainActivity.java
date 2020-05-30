@@ -1,22 +1,15 @@
 package ru.hse.edu.grudina.obshak;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import ru.hse.edu.grudina.obshak.interfaces.UserCreator;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +26,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.password_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                signIn(Email.getText().toString(), Password.getText().toString(), "");
+                signIn(Email.getText().toString(), Password.getText().toString(), "", null);
             }
         });
         Register.setOnClickListener(new View.OnClickListener() {
@@ -139,13 +133,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setResetPasswordView();
-            }
-        });
-        Image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-                startActivity(intent);
             }
         });
 
@@ -248,11 +235,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    public void signIn(String email, String password, final String start) {
+    public void signIn(String email, String password, final String start, final UserCreator creator) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -261,7 +248,9 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor editor = save.edit();
                     editor.putString("email", Email.getText().toString());
                     editor.commit();
-
+                    if(creator != null){
+                        creator.create();
+                    }
                     StringBuilder builder = new StringBuilder();
                     builder.append(start).append(" ").append(getString(R.string.login_success)).append(", ").append(mAuth.getCurrentUser().getDisplayName()).append('!');
                     Toast.makeText(MainActivity.this, builder, Toast.LENGTH_LONG).show();
@@ -283,7 +272,13 @@ public class MainActivity extends AppCompatActivity {
                             .setDisplayName(NickName.getText().toString())
                             .build();
                     mAuth.getCurrentUser().updateProfile(profileChange);
-                    signIn(email, password, getString(R.string.registration_success));
+
+                    signIn(email, password, getString(R.string.registration_success), new UserCreator() {
+                        @Override
+                        public void create() {
+                            User.createUser(NickName.getText().toString(), Email.getText().toString());
+                        }
+                    });
                 } else {
                     Toast.makeText(MainActivity.this, R.string.registration_error, Toast.LENGTH_SHORT).show();
                 }

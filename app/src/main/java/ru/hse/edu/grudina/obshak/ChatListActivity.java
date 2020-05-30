@@ -2,6 +2,8 @@ package ru.hse.edu.grudina.obshak;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -30,13 +32,26 @@ public class ChatListActivity extends AppCompatActivity {
 
         displayChatList();
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.profile){
+            Intent intent = new Intent(ChatListActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.chat_list_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     public void createChat(View view) {
         FirebaseDatabase.getInstance().getReference().child("chats").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String chat_title = "chat#" + dataSnapshot.getChildrenCount();
-
                 openChat(Chat.createChat(chat_title).getUid());
             }
 

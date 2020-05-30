@@ -16,6 +16,7 @@
     <string name="login_success">Добро пожаловать</string>
     <string name="reset_success">Форма для смены пароля отправленна на почту</string>
     <string name="reset_error">Ошибка! Попробуйте позже</string>
+    <string name="connection_error">Ошибка соединения! Попробуйте позже</string>
     <string name="about_program">О программе</string>
     <string name="about_program_info">В разработке принимали участие:\nВологжанин Евгений\nНикольский Владислав\nШарипов Айнур\nЖучков Святослав\nЯдав Навин</string>
     <string name="close">Закрыть приложение</string>
@@ -45,8 +46,29 @@
     <string name="user_politic_text">Политические предпочтения</string>
     <string name="user_work_text">Место работы/учебы</string>
     <string name="user_social_text">Соцсети</string>
-    <string name="user_vk_text">Вконтакте</string>
-    <string name="user_instagram_text">Инстограмм</string>
-    <string name="user_facebook_text">Фейсбук</string>
+    <string name="user_vk_text">ВКонтакте</string>
+    <string name="user_instagram_text">Instagram</string>
+    <string name="user_facebook_text">Facebook</string>
     <string name="user_profile_reduct_text">Редактировать</string>
+    <string name="profile_title">Профиль</string>
+    <string name="user_photo_name">Фотография</string>
+    <string name="user_nick_name">Ник</string>
+    <string name="user_twitter_text">Twitter</string>
+    <string name="user_telegram_text">Telegram</string>
+    <string name="user_skype_text">Skype</string>
+    <string name="cansel">Отмена</string>
+    <string name="reset">Сбросить</string>
+    <string name="apply">принять</string>
+    <string-array name="politics">
+        <item></item>
+        <item>Индифферентные</item>
+        <item>Коммунистические</item>
+        <item>Социалистические</item>
+        <item>Умеренные</item>
+        <item>Либеральные</item>
+        <item>Консервативные</item>
+        <item>Монархические</item>
+        <item>Ультроконсервативные</item>
+        <item>Либертарианские</item>
+    </string-array>
 </resources>

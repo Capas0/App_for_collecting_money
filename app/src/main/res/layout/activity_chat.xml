@@ -19,7 +19,7 @@
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:hint="Message"
+            android:hint="@string/message_hint"
             android:autofillHints="Message"
             android:ems="10"
             android:gravity="start|top"

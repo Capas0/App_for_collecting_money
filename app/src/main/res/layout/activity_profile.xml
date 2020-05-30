@@ -53,7 +53,6 @@
                     android:layout_marginLeft="16sp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="Никнейм"
                     android:theme="@style/BigTitle" />
 
                 <TextView
@@ -62,8 +61,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16sp"
                     android:layout_weight="1"
+                    android:maxLines="1"
                     android:gravity="center_vertical"
-                    android:text="MyMail@mail.ru"
                     android:theme="@style/BigTitleTwo" />
             </LinearLayout>
 
@@ -99,7 +98,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="gone"
                 android:background="@drawable/red_frame"
                 android:orientation="vertical">
 
@@ -134,7 +135,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Фамилия Имя Отчество"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -161,7 +161,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="1 января 1990"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -188,7 +187,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Вашингтон"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -215,7 +213,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Русский"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -242,7 +239,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="ВШЭ"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
             </LinearLayout>
@@ -252,8 +248,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="gone"
                 android:background="@drawable/red_frame"
                 android:orientation="vertical">
 
@@ -288,7 +285,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="MyMail@mail.ru"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -315,7 +311,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="8-800-555-35-35"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -342,7 +337,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Вашингтон, дом 123, квартира 45"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
             </LinearLayout>
@@ -352,8 +346,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginRight="20dp"
+                android:visibility="gone"
                 android:background="@drawable/red_frame"
                 android:orientation="vertical">
 
@@ -388,7 +383,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Ссылка на вк"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -415,7 +409,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Ссылка на инстограмм"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -442,7 +435,84 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Ссылка на фейсбук"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userTwitterRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_twitter_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userTwitter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userTelegramRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_telegram_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userTelegram"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:theme="@style/SimpleText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/userSkypeRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_frame"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@string/user_skype_text"
+                        android:theme="@style/LittleTitle" />
+
+                    <TextView
+                        android:id="@+id/userSkype"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
             </LinearLayout>
@@ -451,7 +521,10 @@
                 android:id="@+id/userAboutMyself"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:visibility="gone"
                 android:background="@drawable/red_frame"
                 android:orientation="vertical">
 
@@ -486,7 +559,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Шахматы\nБильярд"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -513,7 +585,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Безвкусица страшнее фашизма!"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -540,7 +611,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Начало"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -567,7 +637,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Мастер и маргарита"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -594,7 +663,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Rummstein"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
 
@@ -621,7 +689,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:text="Либеральные"
                         android:theme="@style/SimpleText" />
                 </LinearLayout>
             </LinearLayout>

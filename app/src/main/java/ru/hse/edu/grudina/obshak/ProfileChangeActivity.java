@@ -1,8 +1,5 @@
 package ru.hse.edu.grudina.obshak;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -10,26 +7,23 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TabHost;
-import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -39,7 +33,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.UUID;
 
 public class ProfileChangeActivity extends AppCompatActivity {
@@ -73,11 +66,12 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Cansel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(photoUri.length() > 0){
+                if (photoUri.length() > 0) {
                     StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri);
                     storageReference.delete().addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) { }
+                        public void onFailure(@NonNull Exception e) {
+                        }
                     });
                 }
                 setResult(RESULT_CANCELED);
@@ -89,11 +83,12 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(photoUri.length() > 0){
+                if (photoUri.length() > 0) {
                     StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri);
                     storageReference.delete().addOnFailureListener(new OnFailureListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) { }
+                        public void onFailure(@NonNull Exception e) {
+                        }
                     });
                 }
                 setValueElements();
@@ -103,22 +98,27 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setValueUser();
-                Intent result = new Intent();
-                if(photoUri.length() > 0){
-                    if(user.getPhoto() != null && user.getPhoto().length() > 0){
-                        StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(user.getPhoto());
-                        storageReference.delete().addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) { }
-                        });
+                setValueUser(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent result = new Intent();
+                        if (photoUri.length() > 0) {
+                            if (user.getPhoto() != null && user.getPhoto().length() > 0) {
+                                StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(user.getPhoto());
+                                storageReference.delete().addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                    }
+                                });
+                            }
+                            user.setPhoto(photoUri);
+                        }
+                        result.putExtra("user", user);
+                        setResult(RESULT_OK, result);
+                        isCorrect = true;
+                        finish();
                     }
-                    user.setPhoto(photoUri);
-                }
-                result.putExtra("user", user);
-                setResult(RESULT_OK, result);
-                isCorrect = true;
-                finish();
+                });
             }
         });
 
@@ -132,11 +132,11 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Birthday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Birthday.getText() != null || Birthday.getText().toString().length() > 0){
+                if (Birthday.getText() != null || Birthday.getText().toString().length() > 0) {
                     try {
                         SimpleDateFormat sdf = new SimpleDateFormat("dd MMMM yyyy");
                         today.setTime(sdf.parse(Birthday.getText().toString()));
-                    }catch (Throwable ex){
+                    } catch (Throwable ex) {
 
                     }
                 }
@@ -150,22 +150,22 @@ public class ProfileChangeActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy(){
-        int k;
-        if(!isCorrect){
-            if(photoUri.length() > 0){
+    public void onDestroy() {
+        if (!isCorrect) {
+            if (photoUri.length() > 0) {
                 StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri);
                 storageReference.delete().addOnFailureListener(new OnFailureListener() {
                     @Override
-                    public void onFailure(@NonNull Exception e) { }
+                    public void onFailure(@NonNull Exception e) {
+                    }
                 });
             }
         }
         super.onDestroy();
     }
 
-    private void initializeTab(){
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost);
+    private void initializeTab() {
+        TabHost tabHost = findViewById(R.id.tabHost);
         tabHost.setup();
         TabHost.TabSpec tabSpec = tabHost.newTabSpec("general");
 
@@ -173,7 +173,7 @@ public class ProfileChangeActivity extends AppCompatActivity {
         tabSpec.setIndicator("", getResources().getDrawable(R.drawable.tab_general));
         tabHost.addTab(tabSpec);
 
-        tabSpec = tabHost.newTabSpec("contactes");
+        tabSpec = tabHost.newTabSpec("contacts");
         tabSpec.setContent(R.id.tab_contacts);
         tabSpec.setIndicator("", getResources().getDrawable(R.drawable.tab_contactes));
         tabHost.addTab(tabSpec);
@@ -192,19 +192,25 @@ public class ProfileChangeActivity extends AppCompatActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if(tabId.equals("contactes")){
-                    Type.setText(R.string.user_contacts_text);
-                }else if(tabId.equals("social")){
-                    Type.setText(R.string.user_social_text);
-                }else if(tabId.equals("general")){
-                    Type.setText(R.string.user_general_text);
-                }else{
-                    Type.setText(R.string.user_aboutmyself_text);
+                switch (tabId) {
+                    case "contacts":
+                        Type.setText(R.string.user_contacts_text);
+                        break;
+                    case "social":
+                        Type.setText(R.string.user_social_text);
+                        break;
+                    case "general":
+                        Type.setText(R.string.user_general_text);
+                        break;
+                    default:
+                        Type.setText(R.string.user_aboutmyself_text);
+                        break;
                 }
             }
         });
     }
-    private void initializeElements(){
+
+    private void initializeElements() {
         Photo = findViewById(R.id.user_photo_change);
         Type = findViewById(R.id.tab_type);
         Nick = findViewById(R.id.userNickChange);
@@ -232,10 +238,11 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Reset = findViewById(R.id.profile_change_reset);
         Apply = findViewById(R.id.profile_change_apply);
     }
-    private void setValueElements(){
-        if(user.getPhoto() == null){
+
+    private void setValueElements() {
+        if (user.getPhoto() == null) {
             Photo.setImageResource(R.drawable.com_facebook_profile_picture_blank_square);
-        }else{
+        } else {
             Glide.with(getApplicationContext()).load(user.getPhoto()).into(Photo);
         }
         photoUri = "";
@@ -264,15 +271,15 @@ public class ProfileChangeActivity extends AppCompatActivity {
         Group.setText(user.getMusicalGroup());
         String[] mas = getResources().getStringArray(R.array.politics);
         int i;
-        for (i = 0; i < mas.length; i++){
-            if(mas[i].equals(user.getPoliticalPreferences() == null ? "" : user.getPoliticalPreferences())){
+        for (i = 0; i < mas.length; i++) {
+            if (mas[i].equals(user.getPoliticalPreferences() == null ? "" : user.getPoliticalPreferences())) {
                 break;
             }
         }
         Politic.setSelection(i);
     }
-    private void setValueUser(){
-        user.setNickName(Nick.getText().toString());
+
+    private void setValueUser(final Runnable onFinish) {
         user.setFio(FullName.getText().toString());
         user.setBirthday(Birthday.getText().toString());
         user.setCity(City.getText().toString());
@@ -293,9 +300,22 @@ public class ProfileChangeActivity extends AppCompatActivity {
         user.setBook(Book.getText().toString());
         user.setMusicalGroup(Group.getText().toString());
         user.setPoliticalPreferences(Politic.getSelectedItem().toString());
+
+        final String nick = Nick.getText().toString();
+        User.isNicknameExists(nick, new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (!aBoolean) {
+                    user.setNickName(nick);
+                } else {
+                    Toast.makeText(ProfileChangeActivity.this, "Никнейм занят", Toast.LENGTH_SHORT).show();
+                }
+                onFinish.run();
+            }
+        });
     }
 
-    DatePickerDialog.OnDateSetListener d=new DatePickerDialog.OnDateSetListener() {
+    DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             today.set(Calendar.YEAR, year);
             today.set(Calendar.MONTH, monthOfYear);
@@ -319,30 +339,26 @@ public class ProfileChangeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
-                && data != null && data.getData() != null )
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
+                && data != null && data.getData() != null) {
             Uri filePath = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 Photo.setImageBitmap(bitmap);
                 uploadImage(filePath);
-            }
-            catch (IOException e)
-            {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
     private void uploadImage(Uri filePath) {
-        if(filePath != null)
-        {
+        if (filePath != null) {
             final ProgressDialog progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("Uploading...");
             progressDialog.show();
             final String uuid = UUID.randomUUID().toString();
-            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/"+ uuid);
+            final StorageReference ref = FirebaseStorage.getInstance().getReference().child("images/" + uuid);
             ref.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -352,11 +368,12 @@ public class ProfileChangeActivity extends AppCompatActivity {
                             ref.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    if(photoUri.length() > 0){
+                                    if (photoUri.length() > 0) {
                                         StorageReference storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(photoUri);
                                         storageReference.delete().addOnFailureListener(new OnFailureListener() {
                                             @Override
-                                            public void onFailure(@NonNull Exception e) { }
+                                            public void onFailure(@NonNull Exception e) {
+                                            }
                                         });
                                     }
                                     photoUri = uri.toString();
@@ -368,15 +385,15 @@ public class ProfileChangeActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(ProfileChangeActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(ProfileChangeActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                            double progress = (100.0*taskSnapshot.getBytesTransferred()/taskSnapshot
+                            double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot
                                     .getTotalByteCount());
-                            progressDialog.setMessage("Uploaded "+(int)progress+"%");
+                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         }
                     });
         }

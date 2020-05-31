@@ -62,6 +62,8 @@
     <string name="create_group_hint">Group title</string>
     <string name="create_chat_button_text">Create</string>
     <string name="message_hint">Message</string>
+    <string name="create_chat_user_s_nickname">User\'s nickname</string>
+    <string name="create_chat_add_user_button_text">Add</string>
     <string-array name="politics">
         <item></item>
         <item>Индифферентные</item>

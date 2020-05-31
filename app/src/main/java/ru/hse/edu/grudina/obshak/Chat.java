@@ -10,6 +10,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
 
+@SuppressWarnings("WeakerAccess")
 public class Chat {
     private String title;
     private String uid;

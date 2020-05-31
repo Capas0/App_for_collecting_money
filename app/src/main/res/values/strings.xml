@@ -25,7 +25,7 @@
     <string name="yes">да</string>
     <string name="no">нет</string>
     <string name="ok">ОК</string>
-    <string name="reset_password">Забыл пароль... </string>
+    <string name="reset_password">Забыл пароль… </string>
     <string name="reset_button">Отправить запрос!</string>
     <string name="quick_enter">Хотите ли вы войти как </string>
     <string name="user_general_text">Общее</string>
@@ -59,6 +59,11 @@
     <string name="cansel">Отмена</string>
     <string name="reset">Сбросить</string>
     <string name="apply">принять</string>
+    <string name="create_group_hint">Group title</string>
+    <string name="create_chat_button_text">Create</string>
+    <string name="message_hint">Message</string>
+    <string name="create_chat_user_s_nickname">User\'s nickname</string>
+    <string name="create_chat_add_user_button_text">Add</string>
     <string-array name="politics">
         <item></item>
         <item>Индифферентные</item>

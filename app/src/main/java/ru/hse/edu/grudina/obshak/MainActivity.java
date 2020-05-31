@@ -1,9 +1,5 @@
 package ru.hse.edu.grudina.obshak;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import ru.hse.edu.grudina.obshak.interfaces.UserCreator;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,18 +16,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+import ru.hse.edu.grudina.obshak.interfaces.UserCreator;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private EditText Email;
     private EditText Password;
     private EditText NickName;
@@ -51,18 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-
-                } else {
-
-                }
-            }
-        };
-
         Email = findViewById(R.id.logIn);
         Password = findViewById(R.id.password);
         Login = findViewById(R.id.logInBT);
@@ -78,11 +66,11 @@ public class MainActivity extends AppCompatActivity {
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isUserNameValid(Email.getText().toString())){
+                if (!isUserNameValid(Email.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.email_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!isPasswordValid(Password.getText().toString())){
+                if (!isPasswordValid(Password.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.password_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -92,25 +80,34 @@ public class MainActivity extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isUserNameValid(Email.getText().toString())){
+                if (!isUserNameValid(Email.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.email_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!isPasswordValid(Password.getText().toString())){
+                if (!isPasswordValid(Password.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.password_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(!isNickNameValid(NickName.getText().toString())){
+                if (!isNickNameValid(NickName.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.nick_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                registrationUser(Email.getText().toString(), Password.getText().toString());
+                User.isNicknameExists(NickName.getText().toString(), new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) {
+                        if (aBoolean) {
+                            Toast.makeText(MainActivity.this, "Никнейм занят", Toast.LENGTH_SHORT).show();
+                        } else {
+                            registrationUser(Email.getText().toString(), Password.getText().toString());
+                        }
+                    }
+                });
             }
         });
         Reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isUserNameValid(Email.getText().toString())){
+                if (!isUserNameValid(Email.getText().toString())) {
                     Toast.makeText(MainActivity.this, R.string.email_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -140,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         Email.setText(save.getString("email", ""));
 
 
-        if(mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             AlertDialog.Builder dialog = new
                     AlertDialog.Builder(MainActivity.this);
             dialog.setMessage(getString(R.string.quick_enter) + " " + mAuth.getCurrentUser().getDisplayName() + "?");
@@ -171,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.about_program){
+        if (id == R.id.about_program) {
             AlertDialog.Builder dialog = new
                     AlertDialog.Builder(MainActivity.this);
             dialog.setMessage(R.string.about_program_info);
@@ -185,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
                     });
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-        }else if(id == R.id.close){
+        } else if (id == R.id.close) {
             AlertDialog.Builder dialog = new
                     AlertDialog.Builder(MainActivity.this);
             dialog.setMessage(R.string.close_question);
@@ -206,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
                     });
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-        }else if(id == R.id.closeAndExit){
+        } else if (id == R.id.closeAndExit) {
             AlertDialog.Builder dialog = new
                     AlertDialog.Builder(MainActivity.this);
             dialog.setMessage(R.string.close_question);
@@ -244,11 +241,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    SharedPreferences save = getSharedPreferences("SAVE",0);
+                    SharedPreferences save = getSharedPreferences("SAVE", 0);
                     SharedPreferences.Editor editor = save.edit();
                     editor.putString("email", Email.getText().toString());
                     editor.commit();
-                    if(creator != null){
+                    if (creator != null) {
                         creator.create();
                     }
                     StringBuilder builder = new StringBuilder();
@@ -263,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void registrationUser(final String email, final String password){
+    public void registrationUser(final String email, final String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull final Task<AuthResult> task) {
@@ -286,13 +283,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void resetPassword(String email){
+    private void resetPassword(String email) {
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(MainActivity.this, R.string.reset_success, Toast.LENGTH_LONG).show();
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this, R.string.reset_error, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -302,8 +299,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isUserNameValid(String username) {
         if (username == null) {
             return false;
-        }
-        else {
+        } else {
             return Patterns.EMAIL_ADDRESS.matcher(username).matches();
         }
     }
@@ -316,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         return nickName != null && nickName.length() > 2;
     }
 
-    private void setLoginView(){
+    private void setLoginView() {
         Layout.setBackground(getDrawable(R.drawable.green_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.VISIBLE);
@@ -330,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
         Password.setText("");
     }
 
-    private void setRegisterView(){
+    private void setRegisterView() {
         Layout.setBackground(getDrawable(R.drawable.red_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.VISIBLE);
@@ -345,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
         NickName.setText("");
     }
 
-    private void setResetPasswordView(){
+    private void setResetPasswordView() {
         Layout.setBackground(getDrawable(R.drawable.red_frame_two));
         Email.setVisibility(View.VISIBLE);
         Password.setVisibility(View.GONE);

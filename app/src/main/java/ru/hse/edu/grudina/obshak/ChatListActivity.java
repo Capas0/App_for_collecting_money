@@ -32,15 +32,17 @@ public class ChatListActivity extends AppCompatActivity {
 
         displayChatList();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.profile){
+        if (id == R.id.profile) {
             Intent intent = new Intent(ChatListActivity.this, ProfileActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chat_list_menu, menu);
@@ -48,18 +50,8 @@ public class ChatListActivity extends AppCompatActivity {
     }
 
     public void createChat(View view) {
-        FirebaseDatabase.getInstance().getReference().child("chats").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                String chat_title = "chat#" + dataSnapshot.getChildrenCount();
-                openChat(Chat.createChat(chat_title).getUid());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                throw databaseError.toException();
-            }
-        });
+        Intent intent = new Intent(ChatListActivity.this, ChatCreateActivity.class);
+        startActivity(intent);
     }
 
     void openChat(String chatId) {
@@ -91,9 +83,8 @@ public class ChatListActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         int i = 0;
-                        for(DataSnapshot t : dataSnapshot.getChildren())
-                        {
-                            if(i++ < position)
+                        for (DataSnapshot t : dataSnapshot.getChildren()) {
+                            if (i++ < position)
                                 continue;
                             openChat(Objects.requireNonNull(Objects.requireNonNull(t.getValue(Chat.class)).getUid()));
                             break;

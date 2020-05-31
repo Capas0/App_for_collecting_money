@@ -1,26 +1,24 @@
 package ru.hse.edu.grudina.obshak;
 
-import android.net.Uri;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.core.util.Consumer;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseException;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import androidx.annotation.NonNull;
 import ru.hse.edu.grudina.obshak.interfaces.UserCallBack;
 
+@SuppressWarnings("WeakerAccess")
 @IgnoreExtraProperties
 public class User implements Serializable {
     private String photo;
@@ -46,20 +44,28 @@ public class User implements Serializable {
     private String musicalGroup;
     private String politicalPreferences;
 
-    public User(){
+    private static DatabaseReference users =
+            FirebaseDatabase.getInstance().getReference().child("users");
+    private static DatabaseReference nicknames =
+            FirebaseDatabase.getInstance().getReference().child("nickNames");
 
+    public User() {
     }
 
-    public static void createUser(String nickName, String email){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    public static void createUser(String nickName, String email) {
+        String uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+        DatabaseReference ref = users.child(uid);
+
         User user = new User();
         user.nickName = nickName;
         user.email = email;
         ref.setValue(user);
+
+        nicknames.child(nickName).setValue(uid);
     }
 
-    public static void loadUser(String uid, final UserCallBack callBack){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+    public static void loadUser(String uid, final UserCallBack callBack) {
+        DatabaseReference ref = users.child(uid);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,26 +79,23 @@ public class User implements Serializable {
         });
     }
 
-    public static boolean pushUser(User user, String uid){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users");
-        Map map = new TreeMap();
-        map.put(uid, user);
-        try {
-            ref.updateChildren(map);
-        }catch (Throwable ex){
-            return false;
-        }
-        return true;
-    }
+    public static void pushUser(final User user, final String uid, final Consumer<Boolean> consumer) {
+        loadNickname(uid, new Consumer<String>() {
+            @Override
+            public void accept(String s) {
+                nicknames.child(s).removeValue();
+                nicknames.child(user.nickName).setValue(uid);
 
-    public boolean updateInfo(Map<String, Object> map){
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        try{
-            ref.updateChildren(map);
-        } catch (Throwable e){
-            return false;
-        }
-        return true;
+                Map<String, Object> map = new TreeMap<>();
+                map.put(uid, user);
+                try {
+                    users.updateChildren(map);
+                    consumer.accept(true);
+                } catch (Throwable ex) {
+                    consumer.accept(false);
+                }
+            }
+        });
     }
 
     public String getPhoto() {
@@ -269,5 +272,33 @@ public class User implements Serializable {
 
     public void setPoliticalPreferences(String politicalPreferences) {
         this.politicalPreferences = politicalPreferences;
+    }
+
+    public static void loadNickname(final String uid, final Consumer<String> consumer) {
+        users.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                consumer.accept(dataSnapshot.child(uid).child("nickName").getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
+    }
+
+    public static void isNicknameExists(final String nickName, final Consumer<Boolean> consumer) {
+        nicknames.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                consumer.accept(dataSnapshot.child(nickName).exists());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                throw databaseError.toException();
+            }
+        });
     }
 }
